@@ -62,6 +62,7 @@ Wires all modules, sets up session manager and SDK bridge, dispatches messages.
 | `users-preferences.js` | DM favorites/hidden, auto-continue, chat layout, deleted builtin keys, mate onboarding |
 | `daemon-projects.js` | Worktree tracking (scan, rescan, cleanup), removed project filtering |
 | `ws-schema.js` | WebSocket message type registry (328 message types, informational) |
+| `sessions-mcp-server.js` | MCP server (`clay-sessions`) exposing `spawn_session`, `spawn_sessions`, `get_session_status`, `wait_for_session`. Lets an in-session agent fan out work to sibling sessions in the same project. Parent attribution via `sm.getActiveSession()`; `parentSessionId` is recorded on the child for UI tree views. |
 
 ### YOKE Adapters (lib/yoke/)
 
