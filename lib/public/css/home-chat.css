@@ -1,35 +1,102 @@
 /* ==========================================================================
-   Home Chat (Clay) — phablet-style mini chat embedded in the home hub
+   Clay FAB + popover — phablet-style chat reachable from anywhere
    ==========================================================================
-   The home hub is a flex row: this pane sits on the left, the widget
-   column flows to the right. The pane wraps a phone-shaped chat "frame"
-   (rounded card with shadow) so it reads as a discrete surface, not a
-   restyle of the main chat. */
+   The FAB (#clay-fab) sits at the bottom-right corner over all page
+   content. Clicking it toggles #clay-popover, which contains the
+   .home-chat-frame (rounded card with header / messages / input).
+   Inspired by Vercel's persistent toolbar pattern. */
 
-.home-chat-pane {
-  flex: 0 0 auto;
-  width: 50%;
-  min-width: 360px;
-  max-width: 720px;
+/* --- FAB --- */
+
+.clay-fab {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg, #fff);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  z-index: 9000;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: center;
-  padding: 32px 16px 24px;
-  background: var(--bg);
-  border-right: 1px solid var(--border);
+  padding: 0;
+  transition: transform 0.18s cubic-bezier(.2,.7,.3,1.3), box-shadow 0.18s, opacity 0.18s;
+}
+.clay-fab:hover {
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22), 0 3px 6px rgba(0, 0, 0, 0.10);
+}
+.clay-fab:active {
+  transform: scale(0.96);
+}
+.clay-fab.open {
+  /* Hide while popover is open — the popover X button is the close path */
+  transform: scale(0.6);
+  opacity: 0;
+  pointer-events: none;
 }
 
-.home-chat-frame {
+.clay-fab-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Subtle pulse ring to draw the eye on first paint */
+.clay-fab-pulse {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  animation: clay-fab-pulse 2.4s ease-out 1s 2;
+}
+@keyframes clay-fab-pulse {
+  0%   { opacity: 0;    transform: scale(1);   }
+  20%  { opacity: 0.55; }
+  100% { opacity: 0;    transform: scale(1.6); }
+}
+
+/* --- Popover --- */
+
+.clay-popover {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 380px;
+  height: 560px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 40px);
+  z-index: 9001;
+  display: flex;
+  transform-origin: bottom right;
+  animation: clay-popover-in 0.22s cubic-bezier(.2,.7,.3,1.05);
+}
+.clay-popover.hidden {
+  display: none;
+}
+@keyframes clay-popover-in {
+  from { transform: translateY(8px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+.clay-popover .home-chat-frame {
   width: 100%;
-  max-width: 480px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background: var(--bg-alt, var(--bg));
   border: 1px solid var(--border);
-  border-radius: 24px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.10), 0 2px 6px rgba(0, 0, 0, 0.06);
+  border-radius: 18px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22), 0 4px 10px rgba(0, 0, 0, 0.10);
   overflow: hidden;
-  height: 100%;
 }
 
 /* --- Header --- */
@@ -37,15 +104,15 @@
 .home-chat-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
+  gap: 10px;
+  padding: 12px 12px 12px 14px;
   border-bottom: 1px solid var(--border);
   background: var(--bg);
 }
 
 .home-chat-avatar-wrap {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
@@ -68,14 +135,14 @@
 }
 
 .home-chat-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text);
   line-height: 1.2;
 }
 
 .home-chat-subtitle {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted, var(--text-dimmer));
   line-height: 1.2;
   margin-top: 2px;
@@ -87,8 +154,8 @@
 .home-chat-icon-btn {
   background: none;
   border: none;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -102,8 +169,8 @@
   color: var(--text);
 }
 .home-chat-icon-btn .lucide {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 /* --- Messages list --- */
@@ -111,19 +178,19 @@
 .home-chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 16px 14px;
+  padding: 14px 12px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   background: var(--input-bg, var(--bg));
   scroll-behavior: smooth;
 }
 
 .home-chat-bubble {
   max-width: 88%;
-  padding: 10px 14px;
-  border-radius: 18px;
-  font-size: 14px;
+  padding: 9px 12px;
+  border-radius: 16px;
+  font-size: 13px;
   line-height: 1.5;
   word-wrap: break-word;
   white-space: pre-wrap;
@@ -147,15 +214,15 @@
 
 .home-chat-bubble-system {
   align-self: center;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted, var(--text-dimmer));
   background: transparent;
   padding: 4px 10px;
   font-style: italic;
+  text-align: center;
+  max-width: 100%;
 }
 
-/* Inline session reference: [project/sess_id — 2026-04-22]. Rendered as
-   a subtle chip when the home-chat renderer detects the pattern. */
 .home-chat-ref {
   display: inline-block;
   background: rgba(124, 58, 237, 0.08);
@@ -163,7 +230,7 @@
   padding: 1px 8px;
   border-radius: 10px;
   font-family: "Roboto Mono", "Courier New", monospace;
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
   margin: 0 2px;
   border: 1px solid rgba(124, 58, 237, 0.18);
@@ -177,14 +244,14 @@
 .home-chat-typing {
   display: flex;
   gap: 4px;
-  padding: 6px 18px 0;
+  padding: 4px 16px 0;
   align-items: center;
 }
 .home-chat-typing.hidden { display: none; }
 
 .home-chat-typing-dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--text-dimmer);
   animation: home-chat-bounce 1.2s infinite ease-in-out;
@@ -204,7 +271,7 @@
   display: flex;
   align-items: flex-end;
   gap: 8px;
-  padding: 10px 12px 12px;
+  padding: 10px 10px 12px;
   border-top: 1px solid var(--border);
   background: var(--bg);
 }
@@ -212,15 +279,15 @@
 .home-chat-input {
   flex: 1;
   border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 10px 14px;
+  border-radius: 16px;
+  padding: 9px 12px;
   background: var(--input-bg, var(--bg));
   color: var(--text);
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.5;
   font-family: inherit;
   resize: none;
-  max-height: 140px;
+  max-height: 120px;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
@@ -231,8 +298,8 @@
 
 .home-chat-send-btn {
   flex-shrink: 0;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   border: none;
   background: var(--accent);
@@ -247,47 +314,57 @@
   opacity: 0.4;
   cursor: default;
 }
-.home-chat-send-btn:not(:disabled):hover {
-  opacity: 0.9;
-}
-.home-chat-send-btn:not(:disabled):active {
-  transform: scale(0.95);
-}
+.home-chat-send-btn:not(:disabled):hover { opacity: 0.9; }
+.home-chat-send-btn:not(:disabled):active { transform: scale(0.95); }
 .home-chat-send-btn .lucide {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
-/* --- Right widget pane --- */
+/* --- Mobile / narrow ---
+   On phones the popover fills the screen edge-to-edge with a small
+   inset, and the FAB shrinks slightly. */
 
-.home-hub-inner {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  padding: 48px 24px 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 0;
-}
-
-/* --- Mobile / narrow: stack the chat and widgets --- */
-
-@media (max-width: 900px) {
-  #home-hub {
-    flex-direction: column;
+@media (max-width: 768px) {
+  /* Lift the FAB above the mobile tab bar (56px + safe-bottom). */
+  .clay-fab {
+    right: 14px;
+    bottom: calc(56px + var(--safe-bottom, 0px) + 14px);
+    width: 50px;
+    height: 50px;
   }
-  .home-chat-pane {
+  .clay-fab-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .clay-popover {
+    right: 8px;
+    bottom: calc(56px + var(--safe-bottom, 0px) + 8px);
+    left: 8px;
     width: auto;
-    max-width: none;
-    min-width: 0;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    flex: 0 0 auto;
-    height: 60vh;
-    padding: 16px 12px;
+    height: 70vh;
+    max-height: calc(100vh - 80px - var(--safe-bottom, 0px));
   }
-  .home-hub-inner {
-    flex: 1 1 auto;
-    padding: 24px 16px;
+  .clay-popover .home-chat-frame {
+    border-radius: 16px;
   }
+}
+
+/* When the mobile tab bar is hidden by the keyboard, drop the FAB back
+   down so it doesn't float in dead space. */
+@media (max-width: 768px) {
+  #mobile-tab-bar.keyboard-hidden ~ .clay-fab,
+  body:has(#mobile-tab-bar.keyboard-hidden) .clay-fab {
+    bottom: 14px;
+  }
+}
+
+/* Hide FAB while user is on auth/setup pages or any modal-heavy screens.
+   Add the class .clay-fab-suppressed on <body> when needed. */
+body.clay-fab-suppressed .clay-fab,
+body.clay-fab-suppressed .clay-popover {
+  display: none !important;
 }

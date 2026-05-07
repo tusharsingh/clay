@@ -3,18 +3,18 @@
    ========================================================================== */
 
 /* Hub covers #main-area (sidebar + chat), sits inside it with absolute.
-   Internally it splits into a Clay chat panel on the left and the
-   existing widget column on the right. See home-chat.css for the chat
-   panel styling. */
+   Pure widget surface — Clay chat is reachable via the global FAB
+   instead of being embedded here. */
 #home-hub {
   position: absolute;
   inset: 0;
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
   background: var(--bg);
   z-index: 200;
+  padding: 48px 24px 40px;
   border-top-left-radius: 8px;
   animation: hubFadeIn 0.35s ease;
 }
