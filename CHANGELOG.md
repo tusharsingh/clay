@@ -1,3 +1,29 @@
+# [2.37.0](https://github.com/chadbyte/clay/compare/v2.36.1...v2.37.0) (2026-05-07)
+
+
+### Bug Fixes
+
+* **context:** show correct model name and 1M window for [1m] beta models ([f145c9f](https://github.com/chadbyte/clay/commit/f145c9f7b2af97f5567232ebc588357b0fe763e2))
+* **model:** resolve shorthand model names against vendor model list ([d8d11c6](https://github.com/chadbyte/clay/commit/d8d11c6ff229dad1fa806f1c90ae290cd4c8d721))
+* **pin:** allow forced PIN change without re-entering temp PIN, add logout ([fb04677](https://github.com/chadbyte/clay/commit/fb04677024df95349c61cf117dff3abd96f4b516))
+* **pin:** mirror login PIN UI on temp PIN setup overlay ([c2af16d](https://github.com/chadbyte/clay/commit/c2af16da37f46144beabae5d44dffbbd662184af))
+* **pin:** show focus indicator and reliable digit capture on temp PIN setup ([77e6b88](https://github.com/chadbyte/clay/commit/77e6b88dfd07b85785a2edcd2b74792bac53bfeb))
+* **pin:** unify forced-PIN-change UI through main app overlay ([a5f37dc](https://github.com/chadbyte/clay/commit/a5f37dcd326c05c5be045b8260fb19f550925b85))
+* **rewind:** expose rewindFiles on worker QueryHandle ([a684fa8](https://github.com/chadbyte/clay/commit/a684fa8bfa32cf02897727741b40ce1be3033ddb))
+* **scroll:** respect user scroll-up during streaming response ([c440820](https://github.com/chadbyte/clay/commit/c440820b92bbd7709228b1aac0881f0a63a73a80))
+* **ui:** clear pre-thinking dots on more turn events and add 90s safety timeout ([5d91bc2](https://github.com/chadbyte/clay/commit/5d91bc2ec43c823c1844323870c7175049212abc))
+* **ui:** show vendor avatar next to inline activity dots ([c8f2de6](https://github.com/chadbyte/clay/commit/c8f2de6ba5383fc47d6ea84bc244c6d000d727c8))
+
+
+### Features
+
+* **sdk:** bump claude-agent-sdk to 0.2.132 and set Options.title at creation ([f46b06d](https://github.com/chadbyte/clay/commit/f46b06dc73d13f2cfc846bf5788d2ae896582e66)), closes [#45](https://github.com/chadbyte/clay/issues/45)
+
+
+### Performance Improvements
+
+* **resume:** batch syntax highlight, compact dead-session todos, lower initial page ([182c6ca](https://github.com/chadbyte/clay/commit/182c6cacae1d7fd73fae6734f8e3fd1f09038c2a)), closes [#342](https://github.com/chadbyte/clay/issues/342) [#345](https://github.com/chadbyte/clay/issues/345)
+
 # [2.37.0-beta.2](https://github.com/chadbyte/clay/compare/v2.37.0-beta.1...v2.37.0-beta.2) (2026-05-07)
 
 
