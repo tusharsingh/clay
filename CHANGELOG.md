@@ -1,3 +1,10 @@
+## [2.36.2-beta.9](https://github.com/chadbyte/clay/compare/v2.36.2-beta.8...v2.36.2-beta.9) (2026-05-07)
+
+
+### Bug Fixes
+
+* **ui:** show vendor avatar next to inline activity dots ([c8f2de6](https://github.com/chadbyte/clay/commit/c8f2de6ba5383fc47d6ea84bc244c6d000d727c8))
+
 ## [2.36.2-beta.8](https://github.com/chadbyte/clay/compare/v2.36.2-beta.7...v2.36.2-beta.8) (2026-05-07)
 
 
