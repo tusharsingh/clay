@@ -1,3 +1,10 @@
+# [2.38.0-beta.6](https://github.com/chadbyte/clay/compare/v2.38.0-beta.5...v2.38.0-beta.6) (2026-05-08)
+
+
+### Bug Fixes
+
+* **clay:** forward home_clay_* messages to the server-level handler ([a5f789a](https://github.com/chadbyte/clay/commit/a5f789ac9a569c8777506cdad835e56840b4c9c4))
+
 # [2.38.0-beta.5](https://github.com/chadbyte/clay/compare/v2.38.0-beta.4...v2.38.0-beta.5) (2026-05-07)
 
 
