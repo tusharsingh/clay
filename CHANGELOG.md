@@ -1,3 +1,15 @@
+# [2.39.0-beta.1](https://github.com/chadbyte/clay/compare/v2.38.0...v2.39.0-beta.1) (2026-05-19)
+
+
+### Bug Fixes
+
+* **sdk-bridge:** preserve MCP-mode AskUserQuestion entries across turn boundaries ([b506369](https://github.com/chadbyte/clay/commit/b506369949a6b27ac7944a0e3b736993db4578d7))
+
+
+### Features
+
+* **sessions:** embed claude TUI as a session mode with cross-mode resume ([6812ef6](https://github.com/chadbyte/clay/commit/6812ef69de25c39f58ab77fa886579c1522241b6)), closes [#messages](https://github.com/chadbyte/clay/issues/messages) [#input-area](https://github.com/chadbyte/clay/issues/input-area) [#new-msg-btn](https://github.com/chadbyte/clay/issues/new-msg-btn)
+
 # [2.38.0](https://github.com/chadbyte/clay/compare/v2.37.0...v2.38.0) (2026-05-16)
 
 
