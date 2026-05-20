@@ -78,7 +78,7 @@ When you finish a ticket, `/done` from inside that session transitions the JIRA 
 
 Three MCP tools drive this — `spawn_session` (fan-out), `rename_session` (refine the title once context is loaded), and `mark_session_done` (close-out). All three work from GUI and TUI Claude sessions, because Clay's in-app MCP servers are bridged into the real `claude` CLI via `--mcp-config`. So the planning conversation can be a TUI session (subscription billing) and still command the rest of your workspace.
 
-Ready-to-use `/jira` and `/done` slash commands ship in [`skills/`](skills/) — drop them into `~/.claude/commands/` to get the full workflow on your machine.
+Ready-to-use `/jira`, `/sprint`, and `/done` slash commands ship in [`skills/`](skills/) — drop them into `~/.claude/commands/` to get the full workflow on your machine. `/sprint <PARENT-KEY>` adds another layer on top: it pulls a JIRA parent and its sub-tasks, builds a phased dependency tree, and on each invocation spawns Clay sessions for the next not-yet-done phase (using JIRA itself as the source of truth for phase completion).
 
 ### Ralph Loop: autonomous coding while you sleep
 

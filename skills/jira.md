@@ -131,11 +131,38 @@ Present a summary of all changes:
 - Brief description of each change
 - Test results
 
-**WAIT for explicit user approval before committing.**
+**WAIT for explicit user approval before proceeding to the us-test deploy.**
+
+## Step 7.5: Deploy to us-test
+
+Before committing, deploy the changes to the **us-test** environment so
+the user can confirm the changes behave correctly against the test
+deployment. The exact deploy command is project-specific — find it in
+this priority order:
+
+1. The project's `CLAUDE.md` (look for a `## Deploy` or `## us-test`
+   section, or a documented script).
+2. `package.json` scripts (e.g. `deploy:us-test`, `deploy-test`).
+3. `Makefile` targets (e.g. `make deploy-us-test`, `make us-test`).
+4. Any `bin/` or `scripts/` files with `us-test` / `deploy` in the
+   name.
+
+If you can't find a documented command, **stop and ask the user**
+what the deploy command is rather than guessing. Do NOT push to a
+production-shaped environment.
+
+Run the deploy. Stream output so the user sees what happens. Report
+success, failure, and any URLs the deploy emits (e.g. a us-test
+endpoint to verify against).
+
+**WAIT for explicit user confirmation that us-test works as expected
+before committing.** This is the third approval gate. If the user
+finds something wrong on us-test, return to Step 5 to fix it; don't
+proceed to commit.
 
 ## Step 8: Commit and Close Issue
 
-After the user approves:
+After the user has confirmed us-test:
 
 1. **Commit**: Follow the project's commit message conventions from CLAUDE.md.
    Stage only the relevant files (never `git add -A` or `git add .`).
@@ -166,8 +193,10 @@ After the user approves:
   The user needs the description in plain text to decide whether to
   approve the plan; folding it into the plan or skipping it because
   "the model already read it" is wrong.
-- **Two approval gates**: ALWAYS wait for explicit user approval after Step 3
-  (plan) and Step 7 (work review). Never auto-proceed past these gates.
+- **Three approval gates**: ALWAYS wait for explicit user approval
+  after Step 3 (plan), Step 7 (work review), and Step 7.5 (us-test
+  confirmation). Never auto-proceed past these gates. The us-test
+  deploy is what catches issues *before* they make it into a commit.
 - **Dynamic discovery**: Always discover cloud ID and transition IDs at runtime.
   Never hardcode them.
 - **Error resilience**: If a JIRA API call fails (comment, transition), report

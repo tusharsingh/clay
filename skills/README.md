@@ -23,7 +23,8 @@ new commands appear in the slash-command list.
 
 | Skill | What it does | Requires |
 |-------|--------------|----------|
-| [`/jira <KEY>`](jira.md) | Full JIRA→implementation workflow: fetch issue, rename the Clay session to `KEY - <summary>`, transition to In Progress, dispatch parallel subagents for codebase exploration, produce a plan with two approval gates, implement, transition to Done. | Clay (for `rename_session`), the Atlassian Rovo MCP server, your project's `CLAUDE.md` |
+| [`/jira <KEY>`](jira.md) | Full JIRA→implementation workflow: print the issue summary, rename the Clay session to `KEY - <summary>`, transition to In Progress, dispatch parallel subagents for codebase exploration, produce a plan, implement, deploy to **us-test** for confirmation, then commit and transition to Done. Three approval gates (plan, work review, us-test confirmation). | Clay (for `rename_session`, `mark_session_done`), the Atlassian Rovo MCP server, your project's `CLAUDE.md` (for the deploy command) |
+| [`/sprint <PARENT-KEY>`](sprint.md) | Orchestrate sub-task work in phases. Pulls the parent and its sub-tasks (including done / in-progress ones), builds a phased dependency tree, then on each invocation spawns Clay sessions for the next not-yet-done phase. JIRA is the source of truth for phase advancement, so re-running the skill after a phase completes auto-launches the next one. | Clay (for `spawn_session`), the Atlassian Rovo MCP server, the `/jira` skill installed in spawned sessions |
 | [`/done`](done.md) | Wraps up the session: transitions the JIRA ticket to Done via Atlassian Rovo, then calls Clay's `mark_session_done` so the sidebar moves the session from **Active** to **Completed**. | Clay (for `mark_session_done`), the Atlassian Rovo MCP server |
 
 Both skills are designed to work inside a Clay session — they call into
