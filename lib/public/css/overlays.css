@@ -864,6 +864,26 @@ button.top-bar-pill.pill-accent:hover { background: color-mix(in srgb, var(--acc
 .resume-picker-dialog { min-width: 380px; max-width: 480px; }
 .resume-picker-body { margin-bottom: 12px; }
 
+.resume-picker-controls {
+  margin: 0 0 10px 0;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: var(--surface-sunken, rgba(0, 0, 0, 0.04));
+}
+.resume-picker-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+.resume-picker-toggle input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
 .resume-picker-loading {
   display: flex; align-items: center; gap: 10px;
   padding: 24px 0; justify-content: center;
