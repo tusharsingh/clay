@@ -14,8 +14,23 @@ Store it for all subsequent JIRA calls. If this fails, stop and report the error
 Call `mcp__atlassian__getJiraIssue` with the cloud ID, issue key `$ARGUMENTS`,
 and `responseContentFormat: "markdown"`.
 
-Display to the user: issue summary, description, type, priority, current status,
-and acceptance criteria (if any).
+**Print the issue to the user before doing anything else.** This is the
+first thing the user sees in the session and the only time they see the
+ticket spelled out — don't fold it into your plan or skip to exploration.
+Use a markdown block laid out like this (omit fields the API doesn't
+return):
+
+```
+## $ARGUMENTS — <summary>
+
+**Type:** <type>   **Priority:** <priority>   **Status:** <status>
+
+### Description
+<full description body — preserve markdown formatting>
+
+### Acceptance Criteria
+<bulleted list from AC field, or "(none specified)">
+```
 
 If the issue is not found, stop and ask the user to verify the issue key.
 
@@ -145,6 +160,12 @@ After the user approves:
 
 ## Rules
 
+- **Always print the issue first**: Step 2's full issue block (summary,
+  description, AC) is non-skippable — print it to the user before any
+  exploration, planning, or tool calls beyond the initial JIRA fetch.
+  The user needs the description in plain text to decide whether to
+  approve the plan; folding it into the plan or skipping it because
+  "the model already read it" is wrong.
 - **Two approval gates**: ALWAYS wait for explicit user approval after Step 3
   (plan) and Step 7 (work review). Never auto-proceed past these gates.
 - **Dynamic discovery**: Always discover cloud ID and transition IDs at runtime.
