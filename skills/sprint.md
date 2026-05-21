@@ -204,6 +204,37 @@ least one item not yet Done**. That's the target phase.
 The user might say "skip GP-225 for now" or "only spawn GP-224 from
 this phase" — respect their override.
 
+### Step 8.5: Transition the Parent Issue to In Progress
+
+**Parent-issue mode only.** Skip this step in fix-version mode (fix
+versions don't have a single status to transition).
+
+Before spawning any sub-task sessions, make sure the parent issue's
+JIRA status reflects that work is now active.
+
+1. If you cached the parent's current status in Step 2 and it's
+   already in an in-progress-shaped state (case-insensitive match
+   for "In Progress", "Start Progress", "In Development",
+   "Ongoing") or terminal-shaped (Done / Closed / Resolved), skip
+   the transition silently.
+2. Otherwise call `mcp__atlassian__getTransitionsForJiraIssue` with
+   the cloud ID and the parent key (`$ARGUMENTS` in parent-issue
+   mode).
+3. Pick the transition whose name best matches "In Progress" (also
+   accept "Start Progress", "In Development", or the closest
+   semantic equivalent).
+4. Call `mcp__atlassian__transitionJiraIssue` with the matched
+   transition ID.
+5. If the transition succeeds, mention it briefly to the user
+   (one line). If no suitable transition exists or the API call
+   fails, report it but **continue with the spawn** — the JIRA
+   status of the parent is secondary to actually starting the
+   work.
+
+Do NOT block the spawn on this step. The user already approved
+launching the phase; a parent-status update is bookkeeping, not a
+gate.
+
 ## Step 9: Spawn Clay Sessions for the Target Phase
 
 For each item in the approved phase that is **not already Done**:
