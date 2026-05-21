@@ -547,6 +547,85 @@
 .project-ctx-item.project-ctx-delete { color: var(--error); }
 .project-ctx-item.project-ctx-delete:hover { background: var(--error-8); }
 
+/* --- Project Quick-Edit Popover (right-click on icon strip) --- */
+.project-quick-edit-popover {
+  position: fixed;
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  width: 260px;
+  box-shadow: 0 8px 30px rgba(var(--shadow-rgb), 0.35);
+  z-index: 9999;
+  animation: ctxMenuAppear 0.12s ease-out;
+}
+.project-quick-edit-popover .pqe-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.project-quick-edit-popover .pqe-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.project-quick-edit-popover .pqe-label {
+  font-size: 12px;
+  color: var(--text);
+  min-width: 44px;
+}
+.project-quick-edit-popover .pqe-input {
+  flex: 1;
+  background: var(--surface-sunken, rgba(0, 0, 0, 0.05));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
+  color: var(--text);
+  font-family: inherit;
+}
+.project-quick-edit-popover .pqe-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.project-quick-edit-popover .pqe-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+.project-quick-edit-popover .pqe-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+.project-quick-edit-popover .pqe-btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.project-quick-edit-popover .pqe-btn:hover {
+  background: var(--surface-sunken, rgba(0, 0, 0, 0.05));
+}
+.project-quick-edit-popover .pqe-btn-primary {
+  background: var(--accent-bg, rgba(255, 184, 108, 0.18));
+  color: var(--accent);
+  border-color: transparent;
+}
+.project-quick-edit-popover .pqe-btn-ghost {
+  color: var(--text-muted);
+}
+
 /* --- Project Access Popover --- */
 .project-access-popover {
   position: fixed;
