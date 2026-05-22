@@ -291,6 +291,12 @@ to advance.
 - **Approval gate before each phase launch** — Step 8's "wait for
   approval" is non-negotiable. The user may want to override
   ordering, skip an item, or pause.
+- **Flag attention when waiting** — at the Step 8 approval gate
+  (and any time you're blocked, e.g. cycle detected in Step 6), call
+  `request_user_attention` with a short reason like "Phase 2 plan
+  ready — approve to spawn" or "dependency cycle, need user input".
+  Clay highlights the dispatcher session in the sidebar so the user
+  can spot it among many. Auto-clears when they open the session.
 - **Parallel spawn within a phase** — call `spawn_session` once per
   item in a single turn so the sessions appear together in the
   sidebar instead of trickling in.

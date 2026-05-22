@@ -1034,6 +1034,32 @@
   color: var(--accent, #4a90e2);
 }
 
+/* --- needs-attention session highlight --- */
+.session-attention-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 4px;
+  vertical-align: middle;
+  color: var(--accent, #ffb86c);
+  animation: clayAttentionPulse 1.6s ease-in-out infinite;
+}
+.session-attention-icon svg {
+  width: 12px;
+  height: 12px;
+}
+.session-item.needs-attention {
+  background: var(--accent-bg, rgba(255, 184, 108, 0.12));
+  border-left: 3px solid var(--accent, #ffb86c);
+  padding-left: 9px; /* compensate for the 3px border so text doesn't shift */
+}
+.session-item.needs-attention.active {
+  background: var(--accent-bg, rgba(255, 184, 108, 0.18));
+}
+@keyframes clayAttentionPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.92); }
+}
+
 .session-tab-bar {
   display: flex;
   gap: 2px;

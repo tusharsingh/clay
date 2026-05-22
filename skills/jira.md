@@ -197,6 +197,14 @@ After the user has confirmed us-test:
   after Step 3 (plan), Step 7 (work review), and Step 7.5 (us-test
   confirmation). Never auto-proceed past these gates. The us-test
   deploy is what catches issues *before* they make it into a commit.
+- **Flag attention at approval gates**: every time you stop and wait
+  for the user (the three gates above, plus any time you're blocked
+  on an ambiguous question), call `request_user_attention` with a
+  short reason like "plan ready for approval", "us-test confirmed?",
+  or "blocked on JIRA cloud ID". Clay highlights the session in the
+  sidebar so the user can find which spawn needs them. Auto-clears
+  when they open the session, so you don't have to remember to clear
+  it.
 - **Dynamic discovery**: Always discover cloud ID and transition IDs at runtime.
   Never hardcode them.
 - **Error resilience**: If a JIRA API call fails (comment, transition), report

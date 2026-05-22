@@ -233,6 +233,12 @@ this walkthrough session.
 - **Don't auto-tour** — the user steers. Your job is to describe
   what's on the current page and respond, not to march through
   every route unprompted.
+- **Flag attention when blocked** — if you need the user to switch
+  pages, confirm a fix, or pick between options before continuing,
+  call `request_user_attention` with a short reason like "ready for
+  next page", "fix applied — refresh and confirm?". Clay highlights
+  this session in the sidebar so they can find it. Auto-clears when
+  they open it.
 - **One JIRA per discrete issue** — if the user raises three
   separate things on one page, that's three tickets (or three
   inline fixes, or a mix). Don't bundle unrelated feedback into
